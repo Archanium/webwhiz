@@ -1,9 +1,8 @@
 # Fetching the latest node image on apline linux
-FROM node:14-alpine AS builder
+FROM node:14-slim AS builder
 
 # Declaring env
 ENV NODE_ENV production
-
 # Setting up the work directory
 WORKDIR /app
 
@@ -21,12 +20,13 @@ RUN npm run build
 
 # Fetching the latest nginx image
 FROM nginx:1-alpine
+ENV WEB_HOST web
 
 # Copying built assets from builder
 COPY --from=builder /app/build /usr/share/nginx/html
 
 # Copying our nginx.conf
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/templates/default.conf.template
 
 # Expose port
 EXPOSE 80

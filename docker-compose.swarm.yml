@@ -6,16 +6,13 @@ services:
 
   mongodb:
     image: mongo:latest
-    volumes:
-      - db-data:/data/db
-    expose:
-      - "27017"
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
 
   web:
+    image: ghcr.io/archanium/webwhiz/nodejs:latest
     build: .
     command: node dist/main.js
     ports:
@@ -25,6 +22,7 @@ services:
       - mongodb
 
   nodejs_worker:
+    image: ghcr.io/archanium/webwhiz/nodejs:latest
     build: .
     command: node dist/crawler.main.js
     depends_on:
@@ -32,12 +30,14 @@ services:
       - mongodb
 
   python_worker:
+    image: ghcr.io/archanium/webwhiz/python-worker:latest
     build: ./workers
     depends_on:
       - redis
       - mongodb
 
   frontend:
+    image: ghcr.io/archanium/webwhiz/frontend:latest
     build: ./frontend
     ports:
       - "3030:80"
@@ -45,11 +45,9 @@ services:
       - web
 
   widget:
+    image: ghcr.io/archanium/webwhiz/widget:latest
     build: ./widget
     ports:
       - "3031:80"
     depends_on:
       - web
-
-volumes:
-  db-data:
