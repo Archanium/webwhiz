@@ -7,7 +7,7 @@ COPY ./package-lock.json ./
 RUN npm install
 
 # Copying all the files in our project
-COPY . .
+ADD src  .
 COPY .env.docker .env
 ENV PORT "80"
 # Building our application
@@ -26,7 +26,7 @@ COPY ./package-lock.json ./
 RUN npm install
 
 # Copying all the files in our project
-COPY . .
+ADD src public tsconfig.json ./
 COPY .env.docker .env
 
 # Building our application
