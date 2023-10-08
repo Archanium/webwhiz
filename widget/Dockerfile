@@ -32,3 +32,19 @@ EXPOSE 80
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
+
+FROM node:14-slim AS build-dev
+
+# Setting up the work directory
+WORKDIR /app
+
+# Installing dependencies
+COPY ./package.json ./
+COPY ./package-lock.json ./
+RUN npm install
+
+# Copying all the files in our project
+COPY . .
+ENV PORT "80"
+# Building our application
+CMD ["npm", "run", "start"]

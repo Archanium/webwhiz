@@ -83,6 +83,8 @@ export interface KbDataStore {
   content: string;
   type: DataStoreType;
   status: DataStoreStatus;
+  source?: string;
+  tags?: Array<string>
   createdAt: Date;
   updatedAt: Date;
 }

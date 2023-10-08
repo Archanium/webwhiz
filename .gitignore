@@ -41,3 +41,4 @@ lerna-debug.log*
 # Crawlee storage directory
 storage/
 docker-compose.swarm.override.yml
+docker-compose.override.yml

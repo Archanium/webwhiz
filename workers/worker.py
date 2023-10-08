@@ -48,3 +48,4 @@ def extract_pdf_text(knowledgebase_id: str, pdf_path: str, max_pages: int, filen
 @app.task
 def extract_html_text(html: str) -> str:
     return get_text_from_html(html)
+

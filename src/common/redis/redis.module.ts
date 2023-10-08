@@ -19,6 +19,8 @@ export const REDIS = 'REDIS';
             client = new Redis({
               host: appConfig.get('redisHost'),
               port: appConfig.get('redisPort'),
+              lazyConnect: true,
+              keepAlive: 1000,
             });
           }
           return client;

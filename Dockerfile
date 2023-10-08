@@ -2,7 +2,17 @@
 # BUILD FOR PRODUCTION
 ###################
 
-FROM node:18-alpine As build
+FROM node:18 as build-dev
+WORKDIR /usr/src/app
+
+COPY --chown=node:node package*.json yarn.lock ./
+
+RUN yarn install
+
+COPY --chown=node:node . .
+CMD ["yarn", "run","start:dev"]
+
+FROM node:18-slim As build
 
 WORKDIR /usr/src/app
 
@@ -27,7 +37,7 @@ USER node
 # PRODUCTION
 ###################
 
-FROM node:18-alpine As production
+FROM node:18 As production
 
 # Copy the bundled code from the build stage to the production image
 COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules

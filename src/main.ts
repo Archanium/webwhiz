@@ -4,6 +4,7 @@ import { AppModule } from './app.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { RolesGuard } from './auth/guards/role.enum';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import config from "./common/config/configuration";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -32,7 +33,7 @@ async function bootstrap() {
   //   .setVersion('1.0')
   //   .addTag('webwhiz')
   //   .build();
-
+  //
   // const document = SwaggerModule.createDocument(app, config);
   // SwaggerModule.setup('docs', app, document);
 
@@ -40,5 +41,6 @@ async function bootstrap() {
   const appPort = Number.parseInt(process.env.PORT || '3000', 10);
 
   await app.listen(appPort, host);
+  console.log(`listening on ${host}:${appPort}`);
 }
 bootstrap();
