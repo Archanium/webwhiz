@@ -4,7 +4,7 @@ import { AppModule } from './app.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { RolesGuard } from './auth/guards/role.enum';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import config from "./common/config/configuration";
+import config from './common/config/configuration';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {

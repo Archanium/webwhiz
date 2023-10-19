@@ -8,7 +8,7 @@ import {
   IsString,
 } from 'class-validator';
 import { IsObjectId } from '../common/custom-class-validators';
-import {DataStoreType} from "./knowledgebase.schema";
+import { DataStoreType } from './knowledgebase.schema';
 
 export class CreateKnowledgebaseDTO {
   @IsNotEmpty()
@@ -79,7 +79,7 @@ export class AddCustomChunkDTO {
   url?: string;
   tags?: Array<string>;
 
-  skipEmbedding?:boolean = false;
+  skipEmbedding?: boolean = false;
 }
 
 export class PromptDTO {

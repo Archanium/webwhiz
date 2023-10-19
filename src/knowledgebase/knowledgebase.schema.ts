@@ -50,6 +50,8 @@ export interface Knowledgebase {
   prompt?: string;
   // Custom domain
   customDomain?: string;
+  readyDataCount?: number;
+  totalDataCount?: number;
 }
 
 export type KnowledgebaseSparse = Pick<
@@ -84,7 +86,7 @@ export interface KbDataStore {
   type: DataStoreType;
   status: DataStoreStatus;
   source?: string;
-  tags?: Array<string>
+  tags?: Array<string>;
   createdAt: Date;
   updatedAt: Date;
 }

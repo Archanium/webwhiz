@@ -8,7 +8,7 @@ import { AuthService } from './auth.service';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
 import { EmailModule } from '../common/email/email.module';
-import {BasicStrategy} from "./strategies/basic.strategy";
+import { BasicStrategy } from './strategies/basic.strategy';
 
 @Module({
   imports: [
