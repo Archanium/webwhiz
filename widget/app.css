@@ -552,7 +552,6 @@ form#chat-form {
 }
 
 .chat-input-wrap {
-    padding: 18px 50px 22px 18px;
     border-top: 1px solid rgba(0, 0, 0, 0.12);
     background-color: #FFF;
     position: relative;
@@ -560,6 +559,7 @@ form#chat-form {
 
 .chat-input {
     box-sizing: border-box;
+    padding: 18px 50px 22px 18px;
     width: 100%;
     height: 100%;
     font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";

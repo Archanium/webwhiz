@@ -26,7 +26,9 @@ COPY ./package-lock.json ./
 RUN npm install
 
 # Copying all the files in our project
-ADD src public tsconfig.json ./
+COPY src  ./src
+COPY public ./public
+COPY tsconfig.json .
 COPY .env.docker .env
 
 # Building our application

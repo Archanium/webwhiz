@@ -122,12 +122,17 @@ export class DataStoreService {
      * @param data
      * @returns
      */
-    async insertToDataStoreAndCreateEmbeddings(data: KbDataStore) {
+    async insertToDataStoreAndCreateEmbeddings(data: KbDataStore, skipEmbeding = false) {
+        let dsItem;
         // First insert the item to data store
-        const dsItem = await this.kbDbService.insertToKbDataStore(data);
-
-        await this.generateChunksAndEmbeddingsForDataStoreItem(dsItem);
-
+        if (data.source) {
+            dsItem = await this.kbDbService.insertOrUpdateToKbDataStoreBySource(data);
+        } else {
+            dsItem = await this.kbDbService.insertToKbDataStore(data);
+        }
+        if (skipEmbeding === false) {
+            await this.generateChunksAndEmbeddingsForDataStoreItem(dsItem);
+        }
         return dsItem;
     }
 
@@ -224,10 +229,13 @@ export class DataStoreService {
         if (data.url) {
             dsItem.url = data.url;
         }
-        if(data.tags) {
-            dsItem.tags = data.tags.map((x) => `${x}`);
+        if (data.tags) {
+            dsItem.tags = data.tags.map((x) => `${x}`)
         }
-        dsItem = await this.insertToDataStoreAndCreateEmbeddings(dsItem);
+        if (data.source) {
+            dsItem.source = data.source;
+        }
+        dsItem = await this.insertToDataStoreAndCreateEmbeddings(dsItem, data.skipEmbedding || false);
         return dsItem;
     }
 
@@ -274,8 +282,8 @@ export class DataStoreService {
         pageSize: number,
         type?: DataStoreType,
         page?: number,
-        url?:string,
-        tags?:Array<string>,
+        url?: string,
+        tags?: Array<string>,
     ) {
         const kbId = new ObjectId(knowledgebaseId);
         const kb = await this.kbDbService.getKnowledgebaseSparseById(kbId);

@@ -237,6 +237,31 @@ export class KnowledgebaseDbService {
         };
     }
 
+    async insertOrUpdateToKbDataStoreBySource(data: KbDataStore) {
+        let update: any = {
+            knowledgebaseId: data.knowledgebaseId,
+            source: data.source,
+            tags: data.tags || [],
+            updatedAt: data.updatedAt,
+            title: data.title,
+            content: data.content,
+            type: data.type,
+            status: DataStoreStatus.CREATED,
+        };
+
+        if (data.url) {
+            update.url = data.url;
+        }
+
+        const res = await this.kbDataStoreCollection.findOneAndUpdate({
+            source: data.source, knowledgebaseId: data.knowledgebaseId,
+        }, {
+            $set: update,
+            $setOnInsert: {createdAt: data.createdAt}
+        }, {upsert: true})
+        return {...res.value};
+    }
+
     async getKbDataStoreItemById(id: ObjectId) {
         return this.kbDataStoreCollection.findOne({_id: id});
     }
@@ -265,7 +290,7 @@ export class KnowledgebaseDbService {
         type?: DataStoreType,
         page?: number,
         url?: string,
-        tags?:Array<string>,
+        tags?: Array<string>,
     ) {
         const itemsPerPage = Math.min(pageSize, 100);
 
@@ -290,7 +315,7 @@ export class KnowledgebaseDbService {
         if (url) {
             filterFields.url = url;
         }
-        if(tags && tags.length > 0) {
+        if (tags && tags.length > 0) {
             filterFields.tags = {$in: tags};
         }
 

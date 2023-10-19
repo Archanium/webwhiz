@@ -78,6 +78,8 @@ export class AddCustomChunkDTO {
   source?: string;
   url?: string;
   tags?: Array<string>;
+
+  skipEmbedding?:boolean = false;
 }
 
 export class PromptDTO {
