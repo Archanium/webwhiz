@@ -103,10 +103,10 @@ export class KnowledgebaseDbService {
   async getKnowledgebaseById(id: ObjectId): Promise<Knowledgebase> {
     const res = await this.knowledgebaseCollection.findOne({ _id: id });
     res.totalDataCount = await this.kbDataStoreCollection.countDocuments({
-      knowledgeBaseId: id,
+      knowledgebaseId: id,
     });
     res.readyDataCount = await this.kbDataStoreCollection.countDocuments({
-      knowledgeBaseId: id,
+      knowledgebaseId: id,
       status: DataStoreStatus.TRAINED,
     });
 
